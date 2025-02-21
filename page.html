@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contador de dias</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: url('foto.jpeg') no-repeat center center;
+      background-size: contain;
+      background-color: #000000a8; /* Cor de fundo neutra para complementar a imagem */
+      color: #333;
+    }
+    .container {
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+    <div class="container">
+      <h1>Dias desde 24/10/2019</h1>
+      <p id="days"></p>
+      <p id="years"></p>
+    </div>
+  <script>
+    function calculateDaysSince(startDate) {
+      const start = new Date(startDate);
+      const today = new Date();
+      const timeDifference = today - start;
+      const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      return daysDifference;
+    }
+
+    function calculateYearsMonthsDaysSince(startDate) {
+      const start = new Date(startDate);
+      const today = new Date();
+
+      let years = today.getFullYear() - start.getFullYear();
+      let months = today.getMonth() - start.getMonth();
+      let days = today.getDate() - start.getDate();
+
+      // Adjust for negative days
+      if (days < 0) {
+        months--;
+        const previousMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        days += previousMonth.getDate();
+      }
+
+      // Adjust for negative months
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+
+      return `${years} Anos, ${months} Meses, and ${days} Dias`;
+    }
+
+    document.getElementById('days').textContent = calculateDaysSince('2019-10-24') + ' Dias';
+    document.getElementById('years').textContent = calculateYearsMonthsDaysSince('2019-10-24');
+  </script>
+</body>
+</html>
